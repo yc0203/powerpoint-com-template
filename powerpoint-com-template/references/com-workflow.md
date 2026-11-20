@@ -6,7 +6,7 @@
 
 ```powershell
 $skill = '此 Skill 文件夹的绝对路径'
-$ref = Join-Path $skill 'assets\starter-research\reference.pptx'
+$ref = '已下载或作者提供的本地 PPTX 绝对路径'
 & (Join-Path $skill 'scripts\Inspect-PowerPoint.ps1') -Path $ref -Pages 1,2,3,4,5,6 -OutputDir '本任务可写的新预览目录'
 ```
 
@@ -33,10 +33,10 @@ $slide = $outDeck.Slides.Item(3)
 ## 整页和原生组件怎么复用
 
 - **整页：** 例如可用 'outDeck.Slides.InsertFromFile($ref, 1, 2, 2)' 复制模板第 2 页到输出第 1 页后。核对返回计数、页序、主题和底图；只在确认后删除对应旧页。新稿已是同一文件时，可用 '.Duplicate()' 后 '.MoveTo()'。删除对象前记录目标对象 ID，避免用固定高度批量删掉新稿的原生公式或备注。
-- **组件：** 下例复制参考第 3 页的蓝色图题并挪到目标。覆盖普通标签的文本即可；复杂文字分段使用 'TextRange2.Characters(start, length)' 保留字体层级。复制保留填充、描边、形状、渐变和效果；跨主题粘贴之后仍要用预览检查是否被重映射。脚本针对剪贴板忙作有限重试。
+- **组件：** 下例按清单中的页码和形状 ID 复制图题并挪到目标。覆盖普通标签的文本即可；复杂文字分段使用 'TextRange2.Characters(start, length)' 保留字体层级。复制保留填充、描边、形状、渐变和效果；跨主题粘贴之后仍要用预览检查是否被重映射。脚本针对剪贴板忙作有限重试。先用检查脚本给出 $sourcePage 和 $shapeId，再执行以下示例。
 
 ```powershell
-$swatch = Get-PptShapeById -Slide ($inputDeck.Slides.Item(3)) -Id 6
+$swatch = Get-PptShapeById -Slide ($inputDeck.Slides.Item($sourcePage)) -Id $shapeId
 $label = Copy-PptComponent -SourceShape $swatch -DestinationSlide $slide -Left 49 -Top 109 -Width 320 -Height 31
 $label.TextFrame2.TextRange.Text = '证据图题'
 ```

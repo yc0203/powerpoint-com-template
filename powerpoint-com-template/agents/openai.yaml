@@ -1,4 +1,4 @@
 interface:
   display_name: "PowerPoint COM 模板制作"
   short_description: "仅通过 Windows PowerPoint COM 制作并复用原生模板，逐页检查"
-  default_prompt: "用 $powerpoint-com-template 制作可编辑的 PPTX。先问我用哪套模板，并请我提供含正文、插图和图表数据的内容文档。先编排逐页内容，再用本机 PowerPoint COM 制作并对照模板复核。"
+  default_prompt: "用 $powerpoint-com-template 制作可编辑的 PPTX。先问我用哪套模板，并请我提供含正文、插图和图表数据的内容文档。先下载已选模板（已有本地文件则直接用），再编排逐页内容，用本机 PowerPoint COM 制作并复核。"
